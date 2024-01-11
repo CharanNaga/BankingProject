@@ -1,4 +1,5 @@
-﻿using BankProject.ServiceContracts.Dto;
+﻿using BankProject.Entities;
+using BankProject.ServiceContracts.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace BankProject.ServiceContracts
 
         List<CustomerResponse> GetCustomers();
 
-        List<CustomerResponse> GetFilteredCustomers(string searchBy, string searchString);
+        List<CustomerResponse> GetFilteredCustomers(Predicate<Customer> condition);
 
         CustomerResponse UpdateCustomer(CustomerUpdateRequest? customerUpdateRequest);
 
