@@ -61,7 +61,8 @@ namespace BankProject.Services
 
         public List<CustomerResponse> GetCustomers()
         {
-            throw new NotImplementedException();
+            var customers = _customersRepository.GetCustomers();
+            return customers.Select(c => c.ToCustomerResponse()).ToList();
         }
 
         public List<CustomerResponse> GetFilteredCustomers(string searchBy, string searchString)
