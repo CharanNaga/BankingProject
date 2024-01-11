@@ -25,7 +25,14 @@ namespace BankProject.Repositories
 
         public bool DeleteCustomer(Guid customerID)
         {
-            throw new NotImplementedException();
+            var matchingCustomer = _customers.Find(temp => temp.CustomerID == customerID);
+            if(matchingCustomer == null)
+            {
+                return false;
+            }
+
+            _customers.Remove(matchingCustomer);
+            return true;
         }
 
         public List<Customer> GetCustomers()
