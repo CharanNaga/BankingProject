@@ -40,7 +40,20 @@ namespace BankProject.Repositories
 
         public Customer UpdateCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            var matchingCustomer =  _customers.Find(temp => temp.CustomerID == customer.CustomerID);
+            if (matchingCustomer == null)
+            {
+                return customer;
+            }
+            matchingCustomer.CustomerCode = customer.CustomerCode;
+            matchingCustomer.CustomerName = customer.CustomerName;
+            matchingCustomer.Address = customer.Address;
+            matchingCustomer.Landmark = customer.Landmark;
+            matchingCustomer.City = customer.City;
+            matchingCustomer.Country = customer.Country;
+            matchingCustomer.Mobile = customer.Mobile;
+
+            return matchingCustomer;
         }
     }
 }
