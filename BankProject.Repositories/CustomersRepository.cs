@@ -34,7 +34,7 @@ namespace BankProject.Repositories
 
         public List<Customer> GetFilteredCustomers(Predicate<Customer> condition)
         {
-            throw new NotImplementedException();
+            return _customers.FindAll(condition);
         }
 
         public Customer UpdateCustomer(Customer customer)
