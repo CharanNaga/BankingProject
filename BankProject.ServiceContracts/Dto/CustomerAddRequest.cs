@@ -33,7 +33,8 @@ namespace BankProject.ServiceContracts.Dto
                 Address = Address,
                 Landmark = Landmark,
                 City = City,
-                Country = Country
+                Country = Country,
+                Mobile = Mobile
             };
         }
     }
