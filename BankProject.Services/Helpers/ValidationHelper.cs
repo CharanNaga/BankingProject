@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankProject.Entities.Helpers
+namespace BankProject.Services.Helpers
 {
     public class ValidationHelper
     {
