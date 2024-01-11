@@ -38,7 +38,7 @@
 
                     switch (mainMenuChoice)
                     {
-                        case 1: //TO DO: Display customers menu
+                        case 1: CustomersMenu();
                             break;
                         case 2: //TO DO: Display accounts menu
                             break;
@@ -61,5 +61,39 @@
             }
         }
         Console.WriteLine("Thanks!! Exiting the application");
+    }
+
+    static void CustomersMenu()
+    {
+        int customerMenuChoice = -1;
+        do
+        {
+            Console.WriteLine("______________________CUSTOMER MENU__________________________________________");
+            Console.WriteLine("1. Add Customer");
+            Console.WriteLine("2. Update Customer");
+            Console.WriteLine("3. Fetch Customers");
+            Console.WriteLine("4. Fetch Particular Customer");
+            Console.WriteLine("5. Delete Customer");
+            Console.WriteLine("0. Exit to Main Menu");
+
+            Console.Write("Enter your choice [0-5]: ");
+            customerMenuChoice = Convert.ToInt32(Console.ReadLine());
+
+            switch(customerMenuChoice)
+            {
+                case 1: //TO DO: Create Customer
+                    break;
+                case 2: //TO DO: Update Customer
+                    break;
+                case 3: //TO DO: Get all Customers
+                    break;
+                case 4: //TO DO: Get Customer by CustomerID
+                    break;
+                case 5: //TO DO: Delete Customer
+                    break;
+                case 0:
+                    break;
+            }
+        } while (customerMenuChoice != 0);
     }
 }
