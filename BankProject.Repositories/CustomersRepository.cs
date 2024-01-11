@@ -12,14 +12,15 @@ namespace BankProject.Repositories
     {
         private readonly List<Customer> _customers;
 
-        public CustomersRepository(List<Customer> customers)
+        public CustomersRepository()
         {
             _customers = new List<Customer>();
         }
 
         public Customer AddCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            _customers.Add(customer);
+            return customer;
         }
 
         public bool DeleteCustomer(Guid customerID)
