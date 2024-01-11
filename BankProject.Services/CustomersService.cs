@@ -68,7 +68,54 @@ namespace BankProject.Services
 
         public List<CustomerResponse> GetFilteredCustomers(string searchBy, string searchString)
         {
-            throw new NotImplementedException();
+            List<Customer> filteredCustomers;
+            switch (searchBy)
+            {
+                case nameof(CustomerResponse.CustomerName):
+                    //filter customers by customer name
+                    filteredCustomers = _customersRepository.GetFilteredCustomers(
+                        c => c.CustomerName.Contains(searchString,StringComparison.OrdinalIgnoreCase)
+                        );
+                    break;
+
+                case nameof(CustomerResponse.Address):
+                    //filter customers by address
+                    filteredCustomers = _customersRepository.GetFilteredCustomers(
+                        c => c.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                        );
+                    break;
+
+                case nameof(CustomerResponse.Landmark):
+                    //filter customers by landmark
+                    filteredCustomers = _customersRepository.GetFilteredCustomers(
+                        c => c.Landmark.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                        );
+                    break;
+
+                case nameof(CustomerResponse.City):
+                    //filter customers by city
+                    filteredCustomers = _customersRepository.GetFilteredCustomers(
+                        c => c.City.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                        );
+                    break;
+
+                case nameof(CustomerResponse.Country):
+                    //filter customers by country
+                    filteredCustomers = _customersRepository.GetFilteredCustomers(
+                        c => c.Country.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                        );
+                    break;
+
+                case nameof(CustomerResponse.Mobile):
+                    //filter customers by mobile
+                    filteredCustomers = _customersRepository.GetFilteredCustomers(
+                        c => c.Mobile.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                        );
+                    break;
+                default:
+                    return new List<CustomerResponse>();
+            }
+            return filteredCustomers.Select(c=> c.ToCustomerResponse()).ToList();
         }
 
         public CustomerResponse UpdateCustomer(CustomerUpdateRequest? customerUpdateRequest)
