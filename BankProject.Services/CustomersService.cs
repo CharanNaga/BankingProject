@@ -1,4 +1,5 @@
 ﻿using BankProject.Entities;
+using BankProject.Exceptions;
 using BankProject.Repositories;
 using BankProject.RepositoryContracts;
 using BankProject.ServiceContracts;
@@ -72,7 +73,29 @@ namespace BankProject.Services
 
         public CustomerResponse UpdateCustomer(CustomerUpdateRequest? customerUpdateRequest)
         {
-            throw new NotImplementedException();
+            //1. check for null condition for customerupdaterequest
+            if(customerUpdateRequest == null) 
+            {
+                throw new ArgumentNullException(nameof(customerUpdateRequest));
+            };
+
+            //2. validate all properties of customerupdaterequest
+            ValidationHelper.ModelValidation(customerUpdateRequest);
+
+            //3. convert customerupdaterequest to customer type
+            Customer customer = customerUpdateRequest.ToCustomer();
+
+            //4. invoke corresponding repository method
+            var updatedCustomer = _customersRepository.UpdateCustomer(customer);
+
+            //5. check for null conditionality
+            if(updatedCustomer == null)
+            {
+                throw new CustomerException("No matching customer found.");
+            }
+
+            //5. convert customer object to customerresponse object & return the customerresponse object
+            return updatedCustomer.ToCustomerResponse();
         }
     }
 }
