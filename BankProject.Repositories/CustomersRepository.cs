@@ -1,4 +1,5 @@
 ﻿using BankProject.Entities;
+using BankProject.Exceptions;
 using BankProject.RepositoryContracts;
 using System;
 using System.Collections.Generic;
@@ -19,48 +20,103 @@ namespace BankProject.Repositories
 
         public Customer AddCustomer(Customer customer)
         {
-            _customers.Add(customer);
-            return customer;
+            try
+            {
+                _customers.Add(customer);
+                return customer;
+            }
+            catch(CustomerException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public bool DeleteCustomer(Guid customerID)
         {
-            var matchingCustomer = _customers.Find(temp => temp.CustomerID == customerID);
-            if(matchingCustomer == null)
+            try
             {
-                return false;
-            }
+                var matchingCustomer = _customers.Find(temp => temp.CustomerID == customerID);
+                if (matchingCustomer == null)
+                {
+                    return false;
+                }
 
-            _customers.Remove(matchingCustomer);
-            return true;
+                _customers.Remove(matchingCustomer);
+                return true;
+            }
+            catch (CustomerException)
+            {
+                throw;
+            }
+            catch(Exception) 
+            {
+                throw;
+            }
         }
 
         public List<Customer> GetCustomers()
         {
-            return _customers;
+            try
+            {
+                return _customers;
+            }
+            catch (CustomerException)
+            { 
+                throw; 
+            }
+            catch(Exception) 
+            { 
+                throw;
+            }
         }
 
         public List<Customer> GetFilteredCustomers(Predicate<Customer> condition)
         {
-            return _customers.FindAll(condition);
+            try
+            {
+                return _customers.FindAll(condition);
+            }
+            catch(CustomerException)
+            {
+                throw;
+            }
+            catch (Exception) 
+            {
+                throw;
+            }
         }
 
         public Customer UpdateCustomer(Customer customer)
         {
-            var matchingCustomer =  _customers.Find(temp => temp.CustomerID == customer.CustomerID);
-            if (matchingCustomer == null)
+            try
             {
-                return customer;
-            }
-            matchingCustomer.CustomerCode = customer.CustomerCode;
-            matchingCustomer.CustomerName = customer.CustomerName;
-            matchingCustomer.Address = customer.Address;
-            matchingCustomer.Landmark = customer.Landmark;
-            matchingCustomer.City = customer.City;
-            matchingCustomer.Country = customer.Country;
-            matchingCustomer.Mobile = customer.Mobile;
+                var matchingCustomer = _customers.Find(temp => temp.CustomerID == customer.CustomerID);
+                if (matchingCustomer == null)
+                {
+                    return customer;
+                }
+                matchingCustomer.CustomerCode = customer.CustomerCode;
+                matchingCustomer.CustomerName = customer.CustomerName;
+                matchingCustomer.Address = customer.Address;
+                matchingCustomer.Landmark = customer.Landmark;
+                matchingCustomer.City = customer.City;
+                matchingCustomer.Country = customer.Country;
+                matchingCustomer.Mobile = customer.Mobile;
 
-            return matchingCustomer;
+                return matchingCustomer;
+            }
+            catch(CustomerException)
+            {
+                throw;
+            }
+            catch( Exception ) 
+            { 
+                throw;
+            }   
         }
     }
 }
