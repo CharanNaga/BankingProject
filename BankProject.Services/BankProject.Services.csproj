@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BankProject.Configuration\BankProject.Configuration.csproj" />
     <ProjectReference Include="..\BankProject.Exceptions\BankProject.Exceptions.csproj" />
+    <ProjectReference Include="..\BankProject.Repositories\BankProject.Repositories.csproj" />
     <ProjectReference Include="..\BankProject.RepositoryContracts\BankProject.RepositoryContracts.csproj" />
     <ProjectReference Include="..\BankProject.ServiceContracts\BankProject.ServiceContracts.csproj" />
   </ItemGroup>
