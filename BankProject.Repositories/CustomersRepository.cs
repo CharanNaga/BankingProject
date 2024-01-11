@@ -10,6 +10,13 @@ namespace BankProject.Repositories
 {
     public class CustomersRepository : ICustomersRepository
     {
+        private readonly List<Customer> _customers;
+
+        public CustomersRepository(List<Customer> customers)
+        {
+            _customers = new List<Customer>();
+        }
+
         public Customer AddCustomer(Customer customer)
         {
             throw new NotImplementedException();
@@ -22,7 +29,7 @@ namespace BankProject.Repositories
 
         public List<Customer> GetCustomers()
         {
-            throw new NotImplementedException();
+            return _customers;
         }
 
         public List<Customer> GetFilteredCustomers(Predicate<Customer> condition)
