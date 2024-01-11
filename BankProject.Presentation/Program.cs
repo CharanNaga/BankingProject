@@ -1,4 +1,6 @@
-﻿public class Program
+﻿using BankProject.Presentation;
+
+public class Program
 {
     static void Main(string[] args)
     {
@@ -8,20 +10,27 @@
         Console.WriteLine("\n\n---------------------LOGIN PAGE---------------------------------------------");
 
         //declaring userName & password
-        string userName;
-        string password;
+        string? userName = null, password = null;
 
-        Console.Write("Enter User Name: ");
-        userName = Console.ReadLine();
-
-        if(!string.IsNullOrEmpty(userName))
+        while (true)
         {
-            Console.Write("Enter Password: ");
-            password = Console.ReadLine();
+            Console.Write("Enter User Name: ");
+            userName = Console.ReadLine();
+
+            if (!string.IsNullOrEmpty(userName))
+            {
+                Console.Write("Enter Password: ");
+                password = Console.ReadLine();
+            }
+            else
+            {
+                break;
+            }
+
+            int mainMenuChoice = -1;
 
             if (userName == "Admin" && password == "Admin123")
             {
-                int mainMenuChoice = -1;
 
                 do
                 {
@@ -34,13 +43,18 @@
                     Console.WriteLine("0. Exit");
 
                     Console.Write("Enter your choice [0-5]: ");
-                    mainMenuChoice = Convert.ToInt32(Console.ReadLine());
+                    while (!int.TryParse(Console.ReadLine(), out mainMenuChoice))
+                    {
+                        Console.Write("Enter your choice [0-5]: ");
+                    }
 
                     switch (mainMenuChoice)
                     {
-                        case 1: CustomersMenu();
+                        case 1:
+                            CustomersMenu();
                             break;
-                        case 2: AccountsMenu();
+                        case 2:
+                            AccountsMenu();
                             break;
                         case 3: //TO DO: Display funds transfer menu
                             break;
@@ -59,8 +73,11 @@
             {
                 Console.WriteLine("Invalid UserName or Password");
             }
+            if (mainMenuChoice == 0)
+                break;
         }
-        Console.WriteLine("Thanks!! Exiting the application");
+
+        Console.WriteLine("Thanks for your time!! Exiting the application");
     }
 
     static void CustomersMenu()
@@ -72,20 +89,20 @@
             Console.WriteLine("1. Add Customer");
             Console.WriteLine("2. Update Customer");
             Console.WriteLine("3. Fetch Customers");
-            Console.WriteLine("4. Fetch Particular Customer");
+            Console.WriteLine("4. Filter Customers");
             Console.WriteLine("5. Delete Customer");
-            Console.WriteLine("0. Exit to Main Menu");
+            Console.WriteLine("0. Back to Main Menu");
 
             Console.Write("Enter your choice [0-5]: ");
             customerMenuChoice = Convert.ToInt32(Console.ReadLine());
 
-            switch(customerMenuChoice)
+            switch (customerMenuChoice)
             {
-                case 1: //TO DO: Create Customer
+                case 1: CustomersPresentation.AddCustomer();
                     break;
                 case 2: //TO DO: Update Customer
                     break;
-                case 3: //TO DO: Get all Customers
+                case 3: CustomersPresentation.DisplayCustomers();
                     break;
                 case 4: //TO DO: Get Customer by CustomerID
                     break;
@@ -107,9 +124,9 @@
             Console.WriteLine("1. Add Account");
             Console.WriteLine("2. Update Account");
             Console.WriteLine("3. Fetch Accounts");
-            Console.WriteLine("4. Fetch Particular Account");
+            Console.WriteLine("4. Filter Accounts");
             Console.WriteLine("5. Delete Account");
-            Console.WriteLine("0. Exit to Main Menu");
+            Console.WriteLine("0. Back to Main Menu");
 
             Console.Write("Enter your choice [0-5]: ");
             accountMenuChoice = Convert.ToInt32(Console.ReadLine());
