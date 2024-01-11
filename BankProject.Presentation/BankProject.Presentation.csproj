@@ -7,4 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BankProject.Configuration\BankProject.Configuration.csproj" />
+    <ProjectReference Include="..\BankProject.Exceptions\BankProject.Exceptions.csproj" />
+    <ProjectReference Include="..\BankProject.Repositories\BankProject.Repositories.csproj" />
+    <ProjectReference Include="..\BankProject.Services\BankProject.Services.csproj" />
+  </ItemGroup>
+
 </Project>
