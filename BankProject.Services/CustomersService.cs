@@ -46,7 +46,17 @@ namespace BankProject.Services
 
         public bool DeleteCustomer(Guid? customerID)
         {
-            throw new NotImplementedException();
+            //1. check null conditionality for customerid
+            if(customerID == null)
+            {
+                throw new ArgumentNullException(nameof(customerID));
+            }
+
+            //2. invoke corresponding repository method
+            bool isDeleted = _customersRepository.DeleteCustomer(customerID.Value);
+
+            //3. return boolean value indicating customer object is deleted or not
+            return isDeleted;
         }
 
         public List<CustomerResponse> GetCustomers()
