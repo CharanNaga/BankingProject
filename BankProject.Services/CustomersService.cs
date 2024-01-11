@@ -5,6 +5,7 @@ using BankProject.RepositoryContracts;
 using BankProject.ServiceContracts;
 using BankProject.ServiceContracts.Dto;
 using BankProject.Services.Helpers;
+using BankProject.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,28 @@ namespace BankProject.Services
             //4. create new customerid
             customer.CustomerID = Guid.NewGuid();
 
+            //get all customers
+            List<Customer> customers = _customersRepository.GetCustomers();
+            long maximumCustomerCode = 0;
+
+            foreach (var item in customers)
+            {
+                if (item.CustomerCode > maximumCustomerCode)
+                {
+                    maximumCustomerCode = item.CustomerCode;
+                }
+            }
+
+            //generate new customer code
+            if (customers.Count >= 1)
+            {
+                customer.CustomerCode = maximumCustomerCode + 1;
+            }
+            else
+            {
+                customer.CustomerCode = Settings.BaseCustomerNumber + 1;
+            }
+
             //5. Then invoke corresponding repository
             _customersRepository.AddCustomer(customer);
 
@@ -66,56 +89,10 @@ namespace BankProject.Services
             return customers.Select(c => c.ToCustomerResponse()).ToList();
         }
 
-        public List<CustomerResponse> GetFilteredCustomers(string searchBy, string searchString)
+        public List<CustomerResponse> GetFilteredCustomers(Predicate<Customer> condition)
         {
-            List<Customer> filteredCustomers;
-            switch (searchBy)
-            {
-                case nameof(CustomerResponse.CustomerName):
-                    //filter customers by customer name
-                    filteredCustomers = _customersRepository.GetFilteredCustomers(
-                        c => c.CustomerName.Contains(searchString,StringComparison.OrdinalIgnoreCase)
-                        );
-                    break;
-
-                case nameof(CustomerResponse.Address):
-                    //filter customers by address
-                    filteredCustomers = _customersRepository.GetFilteredCustomers(
-                        c => c.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase)
-                        );
-                    break;
-
-                case nameof(CustomerResponse.Landmark):
-                    //filter customers by landmark
-                    filteredCustomers = _customersRepository.GetFilteredCustomers(
-                        c => c.Landmark.Contains(searchString, StringComparison.OrdinalIgnoreCase)
-                        );
-                    break;
-
-                case nameof(CustomerResponse.City):
-                    //filter customers by city
-                    filteredCustomers = _customersRepository.GetFilteredCustomers(
-                        c => c.City.Contains(searchString, StringComparison.OrdinalIgnoreCase)
-                        );
-                    break;
-
-                case nameof(CustomerResponse.Country):
-                    //filter customers by country
-                    filteredCustomers = _customersRepository.GetFilteredCustomers(
-                        c => c.Country.Contains(searchString, StringComparison.OrdinalIgnoreCase)
-                        );
-                    break;
-
-                case nameof(CustomerResponse.Mobile):
-                    //filter customers by mobile
-                    filteredCustomers = _customersRepository.GetFilteredCustomers(
-                        c => c.Mobile.Contains(searchString, StringComparison.OrdinalIgnoreCase)
-                        );
-                    break;
-                default:
-                    return new List<CustomerResponse>();
-            }
-            return filteredCustomers.Select(c=> c.ToCustomerResponse()).ToList();
+            var filteredCustomers = _customersRepository.GetFilteredCustomers(condition);
+            return filteredCustomers.Select(c => c.ToCustomerResponse()).ToList();
         }
 
         public CustomerResponse UpdateCustomer(CustomerUpdateRequest? customerUpdateRequest)
