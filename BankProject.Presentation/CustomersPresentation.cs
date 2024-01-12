@@ -1,5 +1,7 @@
 ﻿using BankProject.Entities;
 using BankProject.Exceptions;
+using BankProject.Repositories;
+using BankProject.RepositoryContracts;
 using BankProject.ServiceContracts;
 using BankProject.ServiceContracts.Dto;
 using BankProject.Services;
@@ -11,16 +13,16 @@ using System.Threading.Tasks;
 
 namespace BankProject.Presentation
 {
-    public static class CustomersPresentation
+    public class CustomersPresentation
     {
-        private static readonly ICustomersService _customersService;
+        private readonly ICustomersService _customersService;
 
-        static CustomersPresentation()
+        public CustomersPresentation(ICustomersService customersService)
         {
-            _customersService = new CustomersService(); 
+            _customersService = customersService;
         }
 
-        public static void AddCustomer()
+        public void AddCustomer()
         {
             try
             {
@@ -76,7 +78,7 @@ namespace BankProject.Presentation
             }
         }
 
-        public static void DisplayCustomers()
+        public void DisplayCustomers()
         {
             try
             {
@@ -115,7 +117,7 @@ namespace BankProject.Presentation
             }
         }
 
-        public static void UpdateCustomer()
+        public void UpdateCustomer()
         {
             try
             {
@@ -183,7 +185,7 @@ namespace BankProject.Presentation
             }
         }
 
-        public static void FilteredCustomers()
+        public void FilteredCustomers()
         {
             try
             {
@@ -237,7 +239,7 @@ namespace BankProject.Presentation
             }
         }
 
-        public static void DeleteCustomer()
+        public void DeleteCustomer()
         {
             try
             {
