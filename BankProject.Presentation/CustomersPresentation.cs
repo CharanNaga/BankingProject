@@ -136,5 +136,44 @@ namespace BankProject.Presentation
             }
             Console.WriteLine("Customer updated successfully");
         }
+
+        public static void FilteredCustomers()
+        {
+            if (_customersService.GetCustomers().Count <= 0)
+            {
+                Console.WriteLine("No customers exist");
+                return;
+            }
+
+            //display existing customers
+            Console.WriteLine("\n********FILTER CUSTOMERS*************");
+            DisplayCustomers();
+
+            Console.Write("Enter the Customer Code that you want to filter: ");
+            long customerCodeToUpdate;
+
+            while (!long.TryParse(Console.ReadLine(), out customerCodeToUpdate))
+            {
+            }
+            //checking whether any customer is present with the mentioned customer code
+            var matchingCustomers = _customersService.GetFilteredCustomers(temp => temp.CustomerCode == customerCodeToUpdate);
+            if (matchingCustomers == null)
+            {
+                Console.WriteLine("Invalid Customer Code.\n");
+                return;
+            }
+            Console.WriteLine("**************************Filtered Customer(s): *******************************");
+            foreach (var customer in matchingCustomers)
+            {
+                Console.WriteLine("Customer Code: " + customer.CustomerCode);
+                Console.WriteLine("Customer Name: " + customer.CustomerName);
+                Console.WriteLine("Address: " + customer.Address);
+                Console.WriteLine("Landmark: " + customer.Landmark);
+                Console.WriteLine("City: " + customer.City);
+                Console.WriteLine("Country: " + customer.Country);
+                Console.WriteLine("Mobile: " + customer.Mobile);
+                Console.WriteLine();
+            }
+        }
     }
 }
