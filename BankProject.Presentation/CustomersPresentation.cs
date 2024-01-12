@@ -150,13 +150,13 @@ namespace BankProject.Presentation
             DisplayCustomers();
 
             Console.Write("Enter the Customer Code that you want to filter: ");
-            long customerCodeToUpdate;
+            long customerCodeToFilter;
 
-            while (!long.TryParse(Console.ReadLine(), out customerCodeToUpdate))
+            while (!long.TryParse(Console.ReadLine(), out customerCodeToFilter))
             {
             }
             //checking whether any customer is present with the mentioned customer code
-            var matchingCustomers = _customersService.GetFilteredCustomers(temp => temp.CustomerCode == customerCodeToUpdate);
+            var matchingCustomers = _customersService.GetFilteredCustomers(temp => temp.CustomerCode == customerCodeToFilter);
             if (matchingCustomers == null)
             {
                 Console.WriteLine("Invalid Customer Code.\n");
@@ -173,6 +173,43 @@ namespace BankProject.Presentation
                 Console.WriteLine("Country: " + customer.Country);
                 Console.WriteLine("Mobile: " + customer.Mobile);
                 Console.WriteLine();
+            }
+        }
+
+        public static void DeleteCustomer()
+        {
+            if (_customersService.GetCustomers().Count <= 0)
+            {
+                Console.WriteLine("No customers exist");
+                return;
+            }
+
+            //display existing customers
+            Console.WriteLine("\n********DELETE CUSTOMER*************");
+            DisplayCustomers();
+
+            Console.Write("Enter the Customer Code that you want to delete: ");
+            long customerCodeToDelete;
+
+            while (!long.TryParse(Console.ReadLine(), out customerCodeToDelete))
+            {
+            }
+            //checking whether any customer is present with the mentioned customer code
+            var matchingCustomer = _customersService.GetFilteredCustomers(temp => temp.CustomerCode == customerCodeToDelete).FirstOrDefault();
+            if (matchingCustomer == null)
+            {
+                Console.WriteLine("Invalid Customer");
+                return;
+            }
+
+            bool isDeleted = _customersService.DeleteCustomer(matchingCustomer.CustomerID);
+            if (isDeleted)
+            {
+                Console.WriteLine($"Customer:\n {matchingCustomer}\n gets deleted");
+            }
+            else
+            {
+                Console.WriteLine("Deletion operation failed");
             }
         }
     }
