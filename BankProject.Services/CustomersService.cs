@@ -24,102 +24,162 @@ namespace BankProject.Services
         }
         public CustomerResponse AddCustomer(CustomerAddRequest? customerAddRequest)
         {
-            //1. check for null condition for customeraddrequest
-            if(customerAddRequest == null)
-            { 
-                throw new ArgumentNullException(nameof(customerAddRequest)); 
-            }
-
-            //2. validate all properties of customeraddrequest
-            ValidationHelper.ModelValidation(customerAddRequest);
-
-            //3. convert customeraddrequest to customer type
-            Customer customer = customerAddRequest.ToCustomer();
-
-            //4. create new customerid
-            customer.CustomerID = Guid.NewGuid();
-
-            //get all customers
-            List<Customer> customers = _customersRepository.GetCustomers();
-            long maximumCustomerCode = 0;
-
-            foreach (var item in customers)
+            try
             {
-                if (item.CustomerCode > maximumCustomerCode)
+                //1. check for null condition for customeraddrequest
+                if (customerAddRequest == null)
                 {
-                    maximumCustomerCode = item.CustomerCode;
+                    throw new ArgumentNullException(nameof(customerAddRequest));
                 }
-            }
 
-            //generate new customer code
-            if (customers.Count >= 1)
+                //2. validate all properties of customeraddrequest
+                ValidationHelper.ModelValidation(customerAddRequest);
+
+                //3. convert customeraddrequest to customer type
+                Customer customer = customerAddRequest.ToCustomer();
+
+                //4. create new customerid
+                customer.CustomerID = Guid.NewGuid();
+
+                //get all customers
+                List<Customer> customers = _customersRepository.GetCustomers();
+                long maximumCustomerCode = 0;
+
+                foreach (var item in customers)
+                {
+                    if (item.CustomerCode > maximumCustomerCode)
+                    {
+                        maximumCustomerCode = item.CustomerCode;
+                    }
+                }
+
+                //generate new customer code
+                if (customers.Count >= 1)
+                {
+                    customer.CustomerCode = maximumCustomerCode + 1;
+                }
+                else
+                {
+                    customer.CustomerCode = Settings.BaseCustomerNumber + 1;
+                }
+
+                //5. Then invoke corresponding repository
+                _customersRepository.AddCustomer(customer);
+
+                //6. return customerresponse object with newly generated customerid
+                return customer.ToCustomerResponse();
+            }
+            catch (CustomerException)
             {
-                customer.CustomerCode = maximumCustomerCode + 1;
+                throw;
             }
-            else
+
+            catch (Exception)
             {
-                customer.CustomerCode = Settings.BaseCustomerNumber + 1;
+                throw;
             }
-
-            //5. Then invoke corresponding repository
-            _customersRepository.AddCustomer(customer);
-
-            //6. return customerresponse object with newly generated customerid
-            return customer.ToCustomerResponse();
         }
 
         public bool DeleteCustomer(Guid? customerID)
         {
-            //1. check null conditionality for customerid
-            if(customerID == null)
+            try
             {
-                throw new ArgumentNullException(nameof(customerID));
+                //1. check null conditionality for customerid
+                if (customerID == null)
+                {
+                    throw new ArgumentNullException(nameof(customerID));
+                }
+
+                //2. invoke corresponding repository method
+                bool isDeleted = _customersRepository.DeleteCustomer(customerID.Value);
+
+                //3. return boolean value indicating customer object is deleted or not
+                return isDeleted;
+            }
+            catch (CustomerException)
+            {
+                throw;
             }
 
-            //2. invoke corresponding repository method
-            bool isDeleted = _customersRepository.DeleteCustomer(customerID.Value);
-
-            //3. return boolean value indicating customer object is deleted or not
-            return isDeleted;
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public List<CustomerResponse> GetCustomers()
         {
-            var customers = _customersRepository.GetCustomers();
-            return customers.Select(c => c.ToCustomerResponse()).ToList();
+            try
+            {
+                var customers = _customersRepository.GetCustomers();
+                return customers.Select(c => c.ToCustomerResponse()).ToList();
+            }
+            catch (CustomerException)
+            {
+                throw;
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public List<CustomerResponse> GetFilteredCustomers(Predicate<Customer> condition)
         {
-            var filteredCustomers = _customersRepository.GetFilteredCustomers(condition);
-            return filteredCustomers.Select(c => c.ToCustomerResponse()).ToList();
+            try
+            {
+                var filteredCustomers = _customersRepository.GetFilteredCustomers(condition);
+                return filteredCustomers.Select(c => c.ToCustomerResponse()).ToList();
+            }
+            catch (CustomerException)
+            {
+                throw;
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public CustomerResponse UpdateCustomer(CustomerUpdateRequest? customerUpdateRequest)
         {
-            //1. check for null condition for customerupdaterequest
-            if(customerUpdateRequest == null) 
+            try
             {
-                throw new ArgumentNullException(nameof(customerUpdateRequest));
-            };
+                //1. check for null condition for customerupdaterequest
+                if (customerUpdateRequest == null)
+                {
+                    throw new ArgumentNullException(nameof(customerUpdateRequest));
+                };
 
-            //2. validate all properties of customerupdaterequest
-            ValidationHelper.ModelValidation(customerUpdateRequest);
+                //2. validate all properties of customerupdaterequest
+                ValidationHelper.ModelValidation(customerUpdateRequest);
 
-            //3. convert customerupdaterequest to customer type
-            Customer customer = customerUpdateRequest.ToCustomer();
+                //3. convert customerupdaterequest to customer type
+                Customer customer = customerUpdateRequest.ToCustomer();
 
-            //4. invoke corresponding repository method
-            var updatedCustomer = _customersRepository.UpdateCustomer(customer);
+                //4. invoke corresponding repository method
+                var updatedCustomer = _customersRepository.UpdateCustomer(customer);
 
-            //5. check for null conditionality
-            if(updatedCustomer == null)
+                //5. check for null conditionality
+                if (updatedCustomer == null)
+                {
+                    throw new CustomerException("No matching customer found.");
+                }
+
+                //5. convert customer object to customerresponse object & return the customerresponse object
+                return updatedCustomer.ToCustomerResponse();
+            }
+            catch (CustomerException)
             {
-                throw new CustomerException("No matching customer found.");
+                throw;
             }
 
-            //5. convert customer object to customerresponse object & return the customerresponse object
-            return updatedCustomer.ToCustomerResponse();
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
