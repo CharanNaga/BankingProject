@@ -100,7 +100,7 @@ public class Program
             {
                 case 1: CustomersPresentation.AddCustomer();
                     break;
-                case 2: //TO DO: Update Customer
+                case 2: CustomersPresentation.UpdateCustomer();
                     break;
                 case 3: CustomersPresentation.DisplayCustomers();
                     break;
