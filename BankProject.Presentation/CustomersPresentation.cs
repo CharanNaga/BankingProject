@@ -83,5 +83,58 @@ namespace BankProject.Presentation
                 Console.WriteLine();
             }
         }
+
+        public static void UpdateCustomer()
+        {
+            if(_customersService.GetCustomers().Count <= 0)
+            {
+                Console.WriteLine("No customers exist");
+                return;
+            }
+
+            //displaying existing customers
+            Console.WriteLine("\n********UPDATE CUSTOMER*************");
+            DisplayCustomers();
+
+            //read all details from the user
+            Console.Write("Enter the Customer Code that you want to edit: ");
+            long customerCodeToUpdate;
+
+            while (!long.TryParse(Console.ReadLine(), out customerCodeToUpdate))
+            {
+            }
+            //checking whether any customer is present with the mentioned customer code
+            var matchingCustomer = _customersService.GetFilteredCustomers(temp => temp.CustomerCode == customerCodeToUpdate).FirstOrDefault();
+            if(matchingCustomer == null)
+            {
+                Console.WriteLine("Invalid Customer Code.\n");
+                return;
+            }
+
+            Console.WriteLine("NEW CUSTOMER DETAILS:");
+            Console.Write("Customer Name: ");
+            matchingCustomer.CustomerName = Console.ReadLine();
+            Console.Write("Address: ");
+            matchingCustomer.Address = Console.ReadLine();
+            Console.Write("Landmark: ");
+            matchingCustomer.Landmark = Console.ReadLine();
+            Console.Write("City: ");
+            matchingCustomer.City = Console.ReadLine();
+            Console.Write("Country: ");
+            matchingCustomer.Country = Console.ReadLine();
+            Console.Write("Mobile: ");
+            matchingCustomer.Mobile = Console.ReadLine();
+
+            var existingCustomer = matchingCustomer.ToCustomerUpdateRequest();
+
+            var updatedCustomer = _customersService.UpdateCustomer(existingCustomer);
+
+            if(updatedCustomer == null)
+            {
+                Console.WriteLine("Customer Updation failed");
+                return;
+            }
+            Console.WriteLine("Customer updated successfully");
+        }
     }
 }
