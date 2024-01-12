@@ -1,8 +1,13 @@
 ﻿namespace BankProject.Presentation
 {
-    public static class CustomersMenuDisplay
+    public class CustomersMenuDisplay
     {
-        public static void CustomersMenuSelection()
+        private readonly CustomersPresentation _customersPresentation;
+        public CustomersMenuDisplay(CustomersPresentation customersPresentation)
+        {
+            _customersPresentation = customersPresentation;
+        }
+        public void CustomersMenuSelection()
         {
             int customerMenuChoice = -1;
             do
@@ -20,24 +25,24 @@
             } while (customerMenuChoice != 0);
         }
 
-        static void ManipulateCustomersMenuSelection(int customerMenuChoice)
+        void ManipulateCustomersMenuSelection(int customerMenuChoice)
         {
             switch (customerMenuChoice)
             {
                 case 1:
-                    CustomersPresentation.AddCustomer();
+                    _customersPresentation.AddCustomer();
                     break;
                 case 2:
-                    CustomersPresentation.UpdateCustomer();
+                    _customersPresentation.UpdateCustomer();
                     break;
                 case 3:
-                    CustomersPresentation.DisplayCustomers();
+                    _customersPresentation.DisplayCustomers();
                     break;
                 case 4:
-                    CustomersPresentation.FilteredCustomers();
+                    _customersPresentation.FilteredCustomers();
                     break;
                 case 5:
-                    CustomersPresentation.DeleteCustomer();
+                    _customersPresentation.DeleteCustomer();
                     break;
                 case 0:
                     break;
