@@ -19,6 +19,22 @@ namespace BankProject.ServiceContracts.Dto
         public string? Country { get; set; }
         public string? Mobile { get; set; }
 
+
+        public CustomerUpdateRequest ToCustomerUpdateRequest()
+        {
+            return new CustomerUpdateRequest()
+            {
+                CustomerID = CustomerID,
+                CustomerCode = CustomerCode,
+                CustomerName = CustomerName,
+                Address = Address,
+                Landmark = Landmark,
+                City = City,
+                Country = Country,
+                Mobile = Mobile
+            };
+        }
+
         public override bool Equals(object? obj)
         {
             if(obj == null) return false;
