@@ -43,9 +43,9 @@ public class Program
                     Console.WriteLine("0. Exit");
 
                     Console.Write("Enter your choice [0-5]: ");
-                    while (!int.TryParse(Console.ReadLine(), out mainMenuChoice))
+                    while (!int.TryParse(Console.ReadLine(), out mainMenuChoice) || (mainMenuChoice < 0 || mainMenuChoice > 5))
                     {
-                        Console.Write("Enter your choice [0-5]: ");
+                        Console.Write("Invalid Choice.\nEnter your choice [0-5]: ");
                     }
 
                     switch (mainMenuChoice)
@@ -94,7 +94,10 @@ public class Program
             Console.WriteLine("0. Back to Main Menu");
 
             Console.Write("Enter your choice [0-5]: ");
-            customerMenuChoice = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out customerMenuChoice) || (customerMenuChoice < 0 || customerMenuChoice > 5))
+            {
+                Console.Write("Invalid Choice.\nEnter your choice [0-5]: ");
+            }
 
             switch (customerMenuChoice)
             {
@@ -129,7 +132,10 @@ public class Program
             Console.WriteLine("0. Back to Main Menu");
 
             Console.Write("Enter your choice [0-5]: ");
-            accountMenuChoice = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out accountMenuChoice) || (accountMenuChoice < 0 || accountMenuChoice > 5))
+            {
+                Console.Write("Invalid Choice.\nEnter your choice [0-5]: ");
+            }
 
             switch (accountMenuChoice)
             {
