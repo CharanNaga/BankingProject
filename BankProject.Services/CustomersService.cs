@@ -18,9 +18,9 @@ namespace BankProject.Services
     {
         private readonly ICustomersRepository _customersRepository;
 
-        public CustomersService()
+        public CustomersService(ICustomersRepository customersRepository)
         {
-            _customersRepository = new CustomersRepository();
+            _customersRepository = customersRepository;
         }
         public CustomerResponse AddCustomer(CustomerAddRequest? customerAddRequest)
         {
