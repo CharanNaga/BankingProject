@@ -2,9 +2,19 @@
 
 namespace BankProject.Presentation
 {
-    public static class MainMenuDisplay
+    public class MainMenuDisplay
     {
-        public static void DisplayMenu()
+        private readonly CustomersMenuDisplay _customersDisplay;
+        public MainMenuDisplay(CustomersMenuDisplay customersMenuDisplay)
+        {
+            _customersDisplay = customersMenuDisplay;
+        }
+
+        public async Task RunAsync()
+        {
+            DisplayMenu();
+        }
+        public void DisplayMenu()
         {
             Console.WriteLine("*****************************************************************************");
             Console.WriteLine("                     BANKING APPLICATION                                     ");
@@ -49,7 +59,7 @@ namespace BankProject.Presentation
             Console.WriteLine("Thanks for your time!! Exiting the application");
         }
 
-        static int MainMenuSelection()
+        int MainMenuSelection()
         {
             int mainMenuChoice = -1;
             Console.WriteLine("______________________MAIN MENU__________________________________________");
@@ -65,12 +75,12 @@ namespace BankProject.Presentation
             return mainMenuChoice;
         }
 
-        static void ManipulateMainMenuSelection(int mainMenuChoice)
+        void ManipulateMainMenuSelection(int mainMenuChoice)
         {
             switch (mainMenuChoice)
             {
                 case 1:
-                    CustomersMenuDisplay.CustomersMenuSelection();
+                    _customersDisplay.CustomersMenuSelection();
                     break;
                 case 2:
                     AccountsMenuDisplay.AccountsMenuSelection();
