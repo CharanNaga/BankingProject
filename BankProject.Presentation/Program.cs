@@ -104,7 +104,7 @@ public class Program
                     break;
                 case 3: CustomersPresentation.DisplayCustomers();
                     break;
-                case 4: //TO DO: Get Customer by CustomerID
+                case 4: CustomersPresentation.FilteredCustomers();
                     break;
                 case 5: //TO DO: Delete Customer
                     break;
