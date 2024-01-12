@@ -1,4 +1,5 @@
-﻿using BankProject.Presentation;
+﻿using BankProject.Configuration;
+using BankProject.Presentation;
 
 public class Program
 {
@@ -29,7 +30,7 @@ public class Program
 
             int mainMenuChoice = -1;
 
-            if (userName == "Admin" && password == "Admin123")
+            if (userName == Settings.UserName && password == Settings.Password)
             {
 
                 do
