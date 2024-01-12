@@ -106,7 +106,7 @@ public class Program
                     break;
                 case 4: CustomersPresentation.FilteredCustomers();
                     break;
-                case 5: //TO DO: Delete Customer
+                case 5: CustomersPresentation.DeleteCustomer();
                     break;
                 case 0:
                     break;
