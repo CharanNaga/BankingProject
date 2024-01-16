@@ -11,10 +11,10 @@ namespace BankProject.Services.Helpers
             ValidationContext validationContext = new ValidationContext(obj);
             List<ValidationResult> validationResults = new List<ValidationResult>();
             bool isValid = Validator.TryValidateObject(obj, validationContext, validationResults, true);
-            if (!isValid && obj is CustomerAddRequest || obj is CustomerUpdateRequest)
+            if (!isValid && (obj is CustomerAddRequest || obj is CustomerUpdateRequest))
                 throw new CustomerException(validationResults.FirstOrDefault()?.ErrorMessage);
 
-            if (!isValid && obj is AccountAddRequest || obj is AccountUpdateRequest)
+            if (!isValid && (obj is AccountAddRequest || obj is AccountUpdateRequest))
                 throw new AccountException(validationResults.FirstOrDefault()?.ErrorMessage);
         }
     }
