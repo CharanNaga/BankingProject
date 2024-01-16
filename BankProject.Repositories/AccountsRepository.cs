@@ -1,4 +1,5 @@
 ﻿using BankProject.Entities;
+using BankProject.Exceptions;
 using BankProject.RepositoryContracts;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,13 @@ namespace BankProject.Repositories
 {
     public class AccountsRepository : IAccountsRepository
     {
+        private readonly List<Account> _accounts;
+
+        public AccountsRepository()
+        {
+            _accounts = new List<Account>();
+        }
+
         public Account AddAccount(Account account)
         {
             throw new NotImplementedException();
@@ -22,7 +30,18 @@ namespace BankProject.Repositories
 
         public List<Account> GetAccounts()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _accounts;
+            }
+            catch (AccountException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public List<Account> GetFilteredAccounts(Predicate<Account> condition)
