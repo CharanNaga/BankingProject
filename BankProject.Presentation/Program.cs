@@ -34,6 +34,10 @@ public class Program
 
                     services.AddTransient<CustomersPresentation,CustomersPresentation>();
                     services.AddTransient<CustomersMenuDisplay,CustomersMenuDisplay>();
+
+                    services.AddTransient<AccountsPresentation,AccountsPresentation>();
+                    services.AddTransient<AccountsMenuDisplay,AccountsMenuDisplay>();
+
                     services.AddTransient<MainMenuDisplay,MainMenuDisplay>();
                 });
 }
