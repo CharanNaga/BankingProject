@@ -14,6 +14,6 @@ namespace BankProject.Entities
         [Range(0,long.MaxValue,ErrorMessage ="Account Number can't be negative")]
         public long AccountNumber { get; set; }
         [Range(0, long.MaxValue, ErrorMessage = "Balance can't be negative")]
-        public decimal Balaance { get; set; }
+        public decimal Balance { get; set; }
     }
 }
