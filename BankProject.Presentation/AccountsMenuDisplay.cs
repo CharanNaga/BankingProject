@@ -1,8 +1,16 @@
 ﻿namespace BankProject.Presentation
 {
-    public static class AccountsMenuDisplay
+    public class AccountsMenuDisplay
     {
-        public static void AccountsMenuSelection()
+        private readonly AccountsPresentation _presentation;
+
+        public AccountsMenuDisplay(AccountsPresentation presentation)
+        {
+            _presentation = presentation;
+        }
+
+
+        public void AccountsMenuSelection()
         {
             int accountMenuChoice = -1;
             do
@@ -21,19 +29,24 @@
             } while (accountMenuChoice != 0);
         }
 
-        static void ManipulateAccountsMenuSelection(int accountMenuChoice)
+        void ManipulateAccountsMenuSelection(int accountMenuChoice)
         {
             switch (accountMenuChoice)
             {
-                case 1: //TO DO: Create Account
+                case 1:
+                    _presentation.AddAccount();
                     break;
-                case 2: //TO DO: Update Account
+                case 2:
+                    _presentation.UpdateAccount();
                     break;
-                case 3: //TO DO: Get all Accounts
+                case 3:
+                    _presentation.DisplayAccounts();
                     break;
-                case 4: //TO DO: Get Account by AccountID
+                case 4: 
+                    _presentation.FilteredAccounts();
                     break;
-                case 5: //TO DO: Delete Account
+                case 5:
+                    _presentation.DeleteAccount();
                     break;
                 case 0:
                     break;
