@@ -104,7 +104,19 @@ namespace BankProject.Services
 
         public List<AccountResponse> GetAccounts()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var accounts =  _accountsRepository.GetAccounts();
+                return accounts.Select(temp => temp.ToAccountResponse()).ToList();
+            }
+            catch(AccountException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public List<AccountResponse> GetFilteredAccounts(Predicate<Account> condition)
