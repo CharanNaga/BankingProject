@@ -74,7 +74,28 @@ namespace BankProject.Repositories
 
         public Account UpdateAccount(Account account)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var matchingAccount = _accounts.Find(temp=> temp.AccountID ==  account.AccountID);
+                if(matchingAccount == null)
+                {
+                    return account;
+                }
+                matchingAccount.AccountID = account.AccountID;
+                matchingAccount.AccountNumber = account.AccountNumber;
+                matchingAccount.CustomerID = account.CustomerID;
+                matchingAccount.Balance = account.Balance;
+
+                return matchingAccount;
+            }
+            catch(AccountException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
