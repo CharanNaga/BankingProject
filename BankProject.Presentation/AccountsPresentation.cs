@@ -123,6 +123,85 @@ namespace BankProject.Presentation
             }
         }
 
+        public void UpdateAccount()
+        {
+            try
+            {
+                if (_accountsService.GetAccounts().Count <= 0)
+                {
+                    Console.WriteLine("No accounts exist");
+                    return;
+                }
+
+                //display existing accounts
+                Console.WriteLine("\n********EDIT ACCOUNT*************");
+                DisplayAccounts();
+
+                //read all details from the user
+
+                Console.Write("Enter the Account Number that you want to edit: ");
+                long accountCodeToEdit;
+
+                while (!long.TryParse(Console.ReadLine(), out accountCodeToEdit))
+                {
+                    Console.Write("Enter the Account Number that you want to edit: ");
+                }
+
+                var existingAccount = _accountsService.GetFilteredAccounts(temp => temp.AccountNumber == accountCodeToEdit).FirstOrDefault();
+                if (existingAccount == null)
+                {
+                    Console.WriteLine("Invalid Account Number.\n");
+                    return;
+                }
+
+                Console.WriteLine();
+                _customersPresentation.DisplayCustomers();
+
+                //read all details from the user
+                Console.Write("Enter the Updated (existing) Customer Code: ");
+                long customerCodeToEdit;
+
+                while (!long.TryParse(Console.ReadLine(), out customerCodeToEdit))
+                {
+                    Console.Write("Enter the Updated (existing) Customer Code: ");
+                }
+
+                var existingCustomer = _customersService.GetFilteredCustomers(temp => temp.CustomerCode == customerCodeToEdit).FirstOrDefault();
+                if (existingCustomer == null)
+                {
+                    Console.WriteLine("Invalid Customer Code.\n");
+                    return;
+                }
+                existingAccount.CustomerID = existingCustomer.CustomerID;
+
+
+                Console.Write("Balance: ");
+                existingAccount.Balance = long.Parse(Console.ReadLine());
+
+                var existingAccountRequest = existingAccount.ToAccountUpdateRequest();
+
+                var updatedAccount = _accountsService.UpdateAccount(existingAccountRequest);
+
+                if (updatedAccount == null)
+                {
+                    Console.WriteLine("Account Updation failed");
+                    return;
+                }
+                Console.WriteLine("Account updated successfully");
+            }
+            catch (AccountException ae)
+            {
+                Console.WriteLine(ae.InnerException);
+                Console.WriteLine(ae.Message);
+                Console.WriteLine(ae.GetType().Name);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.GetType());
+            }
+        }
+
 
     }
 }
