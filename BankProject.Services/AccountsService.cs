@@ -78,7 +78,28 @@ namespace BankProject.Services
 
         public bool DeleteAccount(Guid? accountID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //1. check null conditionality for accountid
+                if (accountID == null)
+                {
+                    throw new ArgumentNullException(nameof(accountID));
+                }
+
+                //2. invoke corresponding repository method
+                bool isDeleted = _accountsRepository.DeleteAccount(accountID.Value);
+
+                //3. return boolean value indicating account object is deleted or not
+                return isDeleted;
+            }
+            catch(AccountException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public List<AccountResponse> GetAccounts()
