@@ -5,9 +5,12 @@ namespace BankProject.Presentation
     public class MainMenuDisplay
     {
         private readonly CustomersMenuDisplay _customersDisplay;
-        public MainMenuDisplay(CustomersMenuDisplay customersMenuDisplay)
+        private readonly AccountsMenuDisplay _accountsDisplay;
+
+        public MainMenuDisplay(CustomersMenuDisplay customersMenuDisplay, AccountsMenuDisplay accountsDisplay)
         {
             _customersDisplay = customersMenuDisplay;
+            _accountsDisplay = accountsDisplay;
         }
 
         public async Task RunAsync()
@@ -83,7 +86,7 @@ namespace BankProject.Presentation
                     _customersDisplay.CustomersMenuSelection();
                     break;
                 case 2:
-                    AccountsMenuDisplay.AccountsMenuSelection();
+                    _accountsDisplay.AccountsMenuSelection();
                     break;
                 case 3: //TO DO: Display funds transfer menu
                     break;
