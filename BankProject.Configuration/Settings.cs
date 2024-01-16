@@ -13,5 +13,7 @@ namespace BankProject.Configuration
 
         public static string UserName { get; set; } = "Admin";
         public static string Password { get; set; } = "Admin123";
+
+        public static long BaseAccountNumber { get; set; } = 10000;
     }
 }
