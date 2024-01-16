@@ -126,7 +126,40 @@ namespace BankProject.Services
 
         public AccountResponse UpdateAccount(AccountUpdateRequest? accountUpdateRequest)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //1. check for null condition for accountupdaterequest
+                if (accountUpdateRequest == null)
+                {
+                    throw new ArgumentNullException(nameof(accountUpdateRequest));
+                };
+
+                //2. validate all properties of accountupdaterequest
+                ValidationHelper.ModelValidation(accountUpdateRequest);
+
+                //3. convert accountupdaterequest to account type
+                Account account = accountUpdateRequest.ToAccount();
+
+                //4. invoke corresponding repository method
+                var updatedAccount = _accountsRepository.UpdateAccount(account);
+
+                //5. check for null conditionality
+                if (updatedAccount == null)
+                {
+                    throw new AccountException("No matching Account found.");
+                }
+
+                //5. convert account object to accountresponse object & return the accountresponse object
+                return updatedAccount.ToAccountResponse();
+            }
+            catch(AccountException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
     }
 }
