@@ -37,7 +37,24 @@ namespace BankProject.Repositories
 
         public bool DeleteAccount(Guid accountID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var matchingAccount = _accounts.Find(temp => temp.AccountID == accountID);
+                if (matchingAccount == null)
+                {
+                    return false;
+                }
+                _accounts.Remove(matchingAccount);
+                return true;
+            }
+            catch (AccountException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public List<Account> GetAccounts()
