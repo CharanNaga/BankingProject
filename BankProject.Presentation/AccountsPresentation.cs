@@ -79,5 +79,50 @@ namespace BankProject.Presentation
                 Console.WriteLine(ex.GetType());
             }
         }
+
+        public void DisplayAccounts()
+        {
+            try
+            {
+                var accounts = _accountsService.GetAccounts();
+                if(accounts.Count == 0)
+                {
+                    Console.WriteLine("No accounts are present in database.\n");
+                    return;
+                }
+            
+                Console.WriteLine("\n**********ALL ACCOUNTS*************");
+
+                //reading all accounts
+                foreach (var account in accounts)
+                {
+                    Console.WriteLine("Account Number: " + account.AccountNumber);
+
+                    //Get customer details based on CustomerID of account
+                    var customer = _customersService.GetFilteredCustomers(temp => temp.CustomerID == account.CustomerID).FirstOrDefault();
+                    if (customer != null)
+                    {
+                        Console.WriteLine("Customer Code: " + customer.CustomerCode);
+                        Console.WriteLine("Customer Name: " + customer.CustomerName);
+                    }
+
+                    Console.WriteLine("Balance: " + account.Balance);
+                    Console.WriteLine();
+                }
+            }
+            catch (AccountException ae)
+            {
+                Console.WriteLine(ae.InnerException);
+                Console.WriteLine(ae.Message);
+                Console.WriteLine(ae.GetType().Name);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.GetType());
+            }
+        }
+
+
     }
 }
