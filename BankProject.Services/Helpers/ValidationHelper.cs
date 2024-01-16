@@ -1,11 +1,6 @@
 ﻿using BankProject.Exceptions;
 using BankProject.ServiceContracts.Dto;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankProject.Services.Helpers
 {
@@ -19,7 +14,7 @@ namespace BankProject.Services.Helpers
             if (!isValid && obj is CustomerAddRequest || obj is CustomerUpdateRequest)
                 throw new CustomerException(validationResults.FirstOrDefault()?.ErrorMessage);
 
-            if (!isValid)
+            if (!isValid && obj is AccountAddRequest || obj is AccountUpdateRequest)
                 throw new AccountException(validationResults.FirstOrDefault()?.ErrorMessage);
         }
     }
