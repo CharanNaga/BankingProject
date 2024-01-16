@@ -20,7 +20,19 @@ namespace BankProject.Repositories
 
         public Account AddAccount(Account account)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _accounts.Add(account);
+                return account;
+            }
+            catch (AccountException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public bool DeleteAccount(Guid accountID)
