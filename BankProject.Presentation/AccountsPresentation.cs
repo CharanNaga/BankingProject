@@ -254,6 +254,57 @@ namespace BankProject.Presentation
             }
         }
 
+        public void DeleteAccount()
+        {
+            try
+            {
+                if (_accountsService.GetAccounts().Count <= 0)
+                {
+                    Console.WriteLine("No accounts exist");
+                    return;
+                }
 
+                //display existing customers
+                Console.WriteLine("\n********DELETE ACCOUNT*************");
+                DisplayAccounts();
+
+                Console.Write("Enter the Account Number that you want to delete: ");
+                long accountNumberToDelete;
+
+                while (!long.TryParse(Console.ReadLine(), out accountNumberToDelete))
+                {
+                    Console.Write("Enter the Account Number that you want to delete: ");
+                }
+                //checking whether any account is present with the mentioned account number
+                var matchingAccount = _accountsService.GetFilteredAccounts(temp => temp.AccountNumber == accountNumberToDelete).FirstOrDefault();
+                if (matchingAccount == null)
+                {
+                    Console.WriteLine("Invalid Account");
+                    return;
+                }
+
+                bool isDeleted = _accountsService.DeleteAccount(matchingAccount.AccountID);
+
+                if (isDeleted)
+                {
+                    Console.WriteLine($"Account:\n {matchingAccount}\n gets deleted");
+                }
+                else
+                {
+                    Console.WriteLine("Deletion operation failed");
+                }
+            }
+            catch (AccountException ae)
+            {
+                Console.WriteLine(ae.InnerException);
+                Console.WriteLine(ae.Message);
+                Console.WriteLine(ae.GetType().Name);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.GetType());
+            }
+        }
     }
 }
