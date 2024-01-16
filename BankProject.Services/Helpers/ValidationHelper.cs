@@ -1,4 +1,5 @@
 ﻿using BankProject.Exceptions;
+using BankProject.ServiceContracts.Dto;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,8 +16,11 @@ namespace BankProject.Services.Helpers
             ValidationContext validationContext = new ValidationContext(obj);
             List<ValidationResult> validationResults = new List<ValidationResult>();
             bool isValid = Validator.TryValidateObject(obj, validationContext, validationResults, true);
-            if (!isValid)
+            if (!isValid && obj is CustomerAddRequest || obj is CustomerUpdateRequest)
                 throw new CustomerException(validationResults.FirstOrDefault()?.ErrorMessage);
+
+            if (!isValid)
+                throw new AccountException(validationResults.FirstOrDefault()?.ErrorMessage);
         }
     }
 }
