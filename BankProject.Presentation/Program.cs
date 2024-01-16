@@ -1,5 +1,4 @@
-﻿using BankProject.Configuration;
-using BankProject.Presentation;
+﻿using BankProject.Presentation;
 using BankProject.Repositories;
 using BankProject.RepositoryContracts;
 using BankProject.ServiceContracts;
@@ -29,6 +28,10 @@ public class Program
                     // Add your services here using dependency injection
                     services.AddTransient<ICustomersRepository,CustomersRepository>();
                     services.AddTransient<ICustomersService,CustomersService>();
+
+                    services.AddTransient<IAccountsRepository,AccountsRepository>();
+                    services.AddTransient<IAccountsService,AccountsService>();
+
                     services.AddTransient<CustomersPresentation,CustomersPresentation>();
                     services.AddTransient<CustomersMenuDisplay,CustomersMenuDisplay>();
                     services.AddTransient<MainMenuDisplay,MainMenuDisplay>();
