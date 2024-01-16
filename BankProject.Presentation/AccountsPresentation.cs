@@ -202,6 +202,58 @@ namespace BankProject.Presentation
             }
         }
 
+        public void FilteredAccounts()
+        {
+            try
+            {
+                if (_accountsService.GetAccounts().Count <= 0)
+                {
+                    Console.WriteLine("No accounts exist");
+                    return;
+                }
+
+                //display existing accounts
+                Console.WriteLine("\n********FILTER ACCOUNTS*************");
+                DisplayAccounts();
+
+                Console.Write("Enter the Account Number that you want to get: ");
+                long accountCodeToEdit;
+                while (!long.TryParse(Console.ReadLine(), out accountCodeToEdit))
+                {
+                    Console.Write("Enter the Account Number that you want to get: ");
+                }
+                var existingAccount = _accountsService.GetFilteredAccounts(temp => temp.AccountNumber == accountCodeToEdit).FirstOrDefault();
+                if (existingAccount == null)
+                {
+                    Console.WriteLine("Invalid Account Number.\n");
+                    return;
+                }
+                Console.WriteLine("Account Number: " + existingAccount.AccountNumber);
+
+                //Get customer details based on CustomerID of account
+                var existingCustomer = _customersService.GetFilteredCustomers(temp => temp.CustomerID == existingAccount.CustomerID).FirstOrDefault();
+                if (existingCustomer != null)
+                {
+                    Console.WriteLine("Customer Code: " + existingCustomer.CustomerCode);
+                    Console.WriteLine("Customer Name: " + existingCustomer.CustomerName);
+                }
+
+                Console.WriteLine("Balance: " + existingAccount.Balance);
+                Console.WriteLine();
+            }
+            catch (AccountException ae)
+            {
+                Console.WriteLine(ae.InnerException);
+                Console.WriteLine(ae.Message);
+                Console.WriteLine(ae.GetType().Name);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.GetType());
+            }
+        }
+
 
     }
 }
