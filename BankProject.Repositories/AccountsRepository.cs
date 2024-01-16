@@ -46,7 +46,18 @@ namespace BankProject.Repositories
 
         public List<Account> GetFilteredAccounts(Predicate<Account> condition)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _accounts.FindAll(condition);
+            }
+            catch(AccountException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public Account UpdateAccount(Account account)
