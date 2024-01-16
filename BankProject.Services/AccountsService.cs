@@ -1,7 +1,6 @@
 ﻿using BankProject.Configuration;
 using BankProject.Entities;
 using BankProject.Exceptions;
-using BankProject.Repositories;
 using BankProject.RepositoryContracts;
 using BankProject.ServiceContracts;
 using BankProject.ServiceContracts.Dto;
@@ -25,7 +24,7 @@ namespace BankProject.Services
                 //1. check for null condition for accountaddrequest
                 if (accountAddRequest == null)
                 {
-                    throw new ArgumentNullException(nameof(accountAddRequest));
+                    throw new AccountException(nameof(accountAddRequest));
                 }
 
                 //2. validate all properties of accountaddrequest
@@ -83,7 +82,7 @@ namespace BankProject.Services
                 //1. check null conditionality for accountid
                 if (accountID == null)
                 {
-                    throw new ArgumentNullException(nameof(accountID));
+                    throw new AccountException(nameof(accountID));
                 }
 
                 //2. invoke corresponding repository method
@@ -121,7 +120,19 @@ namespace BankProject.Services
 
         public List<AccountResponse> GetFilteredAccounts(Predicate<Account> condition)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var filteredAccounts = _accountsRepository.GetFilteredAccounts(condition);
+                return filteredAccounts.Select(temp => temp.ToAccountResponse()).ToList();
+            }
+            catch(AccountException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public AccountResponse UpdateAccount(AccountUpdateRequest? accountUpdateRequest)
@@ -131,7 +142,7 @@ namespace BankProject.Services
                 //1. check for null condition for accountupdaterequest
                 if (accountUpdateRequest == null)
                 {
-                    throw new ArgumentNullException(nameof(accountUpdateRequest));
+                    throw new AccountException(nameof(accountUpdateRequest));
                 };
 
                 //2. validate all properties of accountupdaterequest
