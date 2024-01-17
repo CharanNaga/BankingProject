@@ -1,12 +1,6 @@
 ﻿using BankProject.Entities;
 using BankProject.Exceptions;
 using BankProject.RepositoryContracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace BankProject.Repositories
 {
     public class CustomersRepository : ICustomersRepository
@@ -16,6 +10,20 @@ namespace BankProject.Repositories
         public CustomersRepository()
         {
             _customers = new List<Customer>();
+            //_customers = new List<Customer>()
+            //{
+            //    new Customer()
+            //    {
+            //        CustomerID = Guid.Parse("8C12BEA9-8FB0-4744-8422-1996533805E8"),
+            //        CustomerCode = 1001,
+            //        CustomerName = "Sample Name",
+            //        Country = "Sample Country",
+            //        City = "Sample City",
+            //        Address = "Sample Address",
+            //        Landmark = "Sample Landmark",
+            //        Mobile = "1234567890"
+            //    }
+            //};
         }
 
         public Customer AddCustomer(Customer customer)

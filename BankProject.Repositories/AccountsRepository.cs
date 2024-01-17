@@ -1,11 +1,6 @@
 ﻿using BankProject.Entities;
 using BankProject.Exceptions;
 using BankProject.RepositoryContracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankProject.Repositories
 {
@@ -16,6 +11,22 @@ namespace BankProject.Repositories
         public AccountsRepository()
         {
             _accounts = new List<Account>();
+            //_accounts = new List<Account>()
+            //{
+            //    new Account() 
+            //    { 
+            //        AccountID = Guid.Parse("E3B7F3CB-1315-431B-8E60-4FE6D79084C8"),
+            //        AccountNumber = 10001,
+            //        Balance = 1000,
+            //        CustomerID = Guid.Parse("8C12BEA9-8FB0-4744-8422-1996533805E8") 
+            //    },
+            //    new Account() { 
+            //        AccountID = Guid.Parse("68319657-1FCF-49CC-9193-C4442F55AD28"), 
+            //        AccountNumber = 10002, 
+            //        Balance = 500, 
+            //        CustomerID = Guid.Parse("8C12BEA9-8FB0-4744-8422-1996533805E8") 
+            //    },
+            //};
         }
 
         public Account AddAccount(Account account)
@@ -29,7 +40,7 @@ namespace BankProject.Repositories
             {
                 throw;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }
@@ -67,7 +78,7 @@ namespace BankProject.Repositories
             {
                 throw;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }
@@ -79,11 +90,11 @@ namespace BankProject.Repositories
             {
                 return _accounts.FindAll(condition);
             }
-            catch(AccountException)
+            catch (AccountException)
             {
                 throw;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }
@@ -93,8 +104,8 @@ namespace BankProject.Repositories
         {
             try
             {
-                var matchingAccount = _accounts.Find(temp=> temp.AccountID ==  account.AccountID);
-                if(matchingAccount == null)
+                var matchingAccount = _accounts.Find(temp => temp.AccountID == account.AccountID);
+                if (matchingAccount == null)
                 {
                     return account;
                 }
@@ -105,7 +116,7 @@ namespace BankProject.Repositories
 
                 return matchingAccount;
             }
-            catch(AccountException)
+            catch (AccountException)
             {
                 throw;
             }
