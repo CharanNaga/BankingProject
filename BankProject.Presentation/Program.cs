@@ -26,10 +26,10 @@ public class Program
                 .ConfigureServices((hostContext, services) =>
                 {
                     // Add your services here using dependency injection
-                    services.AddTransient<ICustomersRepository,CustomersRepository>();
+                    services.AddScoped<ICustomersRepository,CustomersRepository>();
                     services.AddTransient<ICustomersService,CustomersService>();
 
-                    services.AddTransient<IAccountsRepository,AccountsRepository>();
+                    services.AddScoped<IAccountsRepository,AccountsRepository>();
                     services.AddTransient<IAccountsService,AccountsService>();
 
                     services.AddTransient<CustomersPresentation,CustomersPresentation>();
