@@ -4,6 +4,7 @@ using BankProject.RepositoryContracts;
 using BankProject.ServiceContracts;
 using BankProject.ServiceContracts.Dto;
 using BankProject.Services.Helpers;
+using Microsoft.VisualBasic.FileIO;
 
 namespace BankProject.Services
 {
@@ -97,7 +98,19 @@ namespace BankProject.Services
 
         public List<TransactionResponse> GetFilteredTransactions(Predicate<Transaction> predicate)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var filteredTransactions = _transactionsRepository.GetFilteredTransactions(predicate);
+                return filteredTransactions.Select(temp => temp.ToTransactionResponse()).ToList();
+            }
+            catch(TransactionException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public List<TransactionResponse> GetTransactions()
