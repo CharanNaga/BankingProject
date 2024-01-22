@@ -13,18 +13,18 @@ namespace BankProject.Repositories
             _accounts = new List<Account>();
             //_accounts = new List<Account>()
             //{
-            //    new Account() 
-            //    { 
+            //    new Account()
+            //    {
             //        AccountID = Guid.Parse("E3B7F3CB-1315-431B-8E60-4FE6D79084C8"),
             //        AccountNumber = 10001,
             //        Balance = 1000,
-            //        CustomerID = Guid.Parse("8C12BEA9-8FB0-4744-8422-1996533805E8") 
+            //        CustomerID = Guid.Parse("8C12BEA9-8FB0-4744-8422-1996533805E8")
             //    },
-            //    new Account() { 
-            //        AccountID = Guid.Parse("68319657-1FCF-49CC-9193-C4442F55AD28"), 
-            //        AccountNumber = 10002, 
-            //        Balance = 500, 
-            //        CustomerID = Guid.Parse("8C12BEA9-8FB0-4744-8422-1996533805E8") 
+            //    new Account() {
+            //        AccountID = Guid.Parse("68319657-1FCF-49CC-9193-C4442F55AD28"),
+            //        AccountNumber = 10002,
+            //        Balance = 500,
+            //        CustomerID = Guid.Parse("8C12BEA9-8FB0-4744-8422-1996533805E8")
             //    },
             //};
         }
