@@ -95,7 +95,6 @@ namespace BankProject.Repositories
                 {
                     return transaction;
                 }
-                matchingTransaction.TransactionID = transaction.TransactionID;
                 matchingTransaction.TransactionDateTime = transaction.TransactionDateTime;
                 matchingTransaction.SourceAccountID = transaction.SourceAccountID;
                 matchingTransaction.DestinationAccountID = transaction.DestinationAccountID;
