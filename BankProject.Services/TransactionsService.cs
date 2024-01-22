@@ -71,9 +71,28 @@ namespace BankProject.Services
             }
         }
 
-        public bool DeleteTransaction(Guid transactionID)
+        public bool DeleteTransaction(Guid? transactionID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                //1. check for null condition for transactionID
+                if(transactionID == null)
+                    throw new TransactionException(nameof(transactionID));
+
+                //2. invoke corresponding repository
+                var isDeleted = _transactionsRepository.DeleteTransaction(transactionID.Value);
+
+                //3. return the result
+                return isDeleted;
+            }
+            catch(TransactionException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public List<TransactionResponse> GetFilteredTransactions(Predicate<Transaction> predicate)
