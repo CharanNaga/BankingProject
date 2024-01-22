@@ -9,9 +9,9 @@ namespace BankProject.Repositories
     {
         private readonly List<Transaction> _transactions;
 
-        public TransactionsRepository(List<Transaction> transactions)
+        public TransactionsRepository()
         {
-            _transactions = transactions;
+            _transactions = new List<Transaction>();
         }
 
 
