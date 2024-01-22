@@ -9,6 +9,6 @@ namespace BankProject.ServiceContracts
         List<TransactionResponse> GetTransactions();
         List<TransactionResponse> GetFilteredTransactions(Predicate<Transaction> predicate);
         TransactionResponse UpdateTransaction(TransactionUpdateRequest? transactionUpdateRequest);
-        bool DeleteTransaction(Guid transactionID);
+        bool DeleteTransaction(Guid? transactionID);
     }
 }
