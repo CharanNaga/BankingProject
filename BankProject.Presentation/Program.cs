@@ -32,11 +32,16 @@ public class Program
                     services.AddScoped<IAccountsRepository,AccountsRepository>();
                     services.AddTransient<IAccountsService,AccountsService>();
 
+                    services.AddScoped<ITransactionsRepository, TransactionsRepository>();
+                    services.AddTransient<ITransactionsService, TransactionsService>();
+
                     services.AddTransient<CustomersPresentation,CustomersPresentation>();
                     services.AddTransient<CustomersMenuDisplay,CustomersMenuDisplay>();
 
                     services.AddTransient<AccountsPresentation,AccountsPresentation>();
                     services.AddTransient<AccountsMenuDisplay,AccountsMenuDisplay>();
+
+                    services.AddTransient<TransactionsPresentation,TransactionsPresentation>();
 
                     services.AddTransient<MainMenuDisplay,MainMenuDisplay>();
                 });
