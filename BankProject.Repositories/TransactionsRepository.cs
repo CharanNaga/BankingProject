@@ -88,7 +88,29 @@ namespace BankProject.Repositories
 
         public Transaction UpdateTransaction(Transaction transaction)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var matchingTransaction = _transactions.Find(temp => temp.TransactionID == transaction.TransactionID);
+                if(matchingTransaction == null)
+                {
+                    return transaction;
+                }
+                matchingTransaction.TransactionID = transaction.TransactionID;
+                matchingTransaction.TransactionDateTime = transaction.TransactionDateTime;
+                matchingTransaction.SourceAccountID = transaction.SourceAccountID;
+                matchingTransaction.DestinationAccountID = transaction.DestinationAccountID;
+                matchingTransaction.Amount = transaction.Amount;
+
+                return matchingTransaction;
+            }
+            catch(TransactionException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
