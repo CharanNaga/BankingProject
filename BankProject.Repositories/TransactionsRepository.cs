@@ -72,7 +72,18 @@ namespace BankProject.Repositories
 
         public List<Transaction> GetTransactions()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _transactions;
+            }
+            catch (TransactionException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public Transaction UpdateTransaction(Transaction transaction)
