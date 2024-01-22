@@ -16,6 +16,9 @@ namespace BankProject.Services.Helpers
 
             if (!isValid && (obj is AccountAddRequest || obj is AccountUpdateRequest))
                 throw new AccountException(validationResults.FirstOrDefault()?.ErrorMessage);
+
+            if (!isValid && (obj is TransactionAddRequest || obj is TransactionUpdateRequest))
+                throw new TransactionException(validationResults.FirstOrDefault()?.ErrorMessage);
         }
     }
 }
