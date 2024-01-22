@@ -132,7 +132,22 @@ namespace BankProject.Services
 
         public TransactionResponse UpdateTransaction(TransactionUpdateRequest? transactionUpdateRequest)
         {
-            throw new NotImplementedException();
+            //1. check for null condition of transactionUpdateRequest
+            if (transactionUpdateRequest == null)
+                throw new TransactionException(nameof(transactionUpdateRequest));
+
+            //2. validate all properties of transactionUpdateRequest
+            ValidationHelper.ModelValidation(transactionUpdateRequest);
+
+            //3. convert transactionUpdateRequest to Transaction type
+            var transaction = transactionUpdateRequest.ToTransaction();
+
+            //4. invoke corresponding repository
+            var updatedTransaction = _transactionsRepository.UpdateTransaction(transaction) 
+                ?? throw new TransactionException("No matching transaction found");
+
+            //5. return the transactionResponse object
+            return updatedTransaction.ToTransactionResponse();
         }
     }
 }
