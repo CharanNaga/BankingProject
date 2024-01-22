@@ -41,7 +41,7 @@ public class Program
                     services.AddTransient<AccountsPresentation,AccountsPresentation>();
                     services.AddTransient<AccountsMenuDisplay,AccountsMenuDisplay>();
 
-                    services.AddTransient<TransactionsPresentation,TransactionsPresentation>();
+                    services.AddScoped<TransactionsPresentation,TransactionsPresentation>();
 
                     services.AddTransient<MainMenuDisplay,MainMenuDisplay>();
                 });
