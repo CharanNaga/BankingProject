@@ -102,7 +102,19 @@ namespace BankProject.Services
 
         public List<TransactionResponse> GetTransactions()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var allTransactions = _transactionsRepository.GetTransactions();
+                return allTransactions.Select(temp => temp.ToTransactionResponse()).ToList();
+            }
+            catch(TransactionException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public TransactionResponse UpdateTransaction(TransactionUpdateRequest? transactionUpdateRequest)
