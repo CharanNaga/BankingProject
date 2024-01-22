@@ -56,7 +56,18 @@ namespace BankProject.Repositories
 
         public List<Transaction> GetFilteredTransactions(Predicate<Transaction> condition)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _transactions.FindAll(condition);
+            }
+            catch(TransactionException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public List<Transaction> GetTransactions()
