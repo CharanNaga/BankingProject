@@ -4,7 +4,6 @@ using BankProject.RepositoryContracts;
 using BankProject.ServiceContracts;
 using BankProject.ServiceContracts.Dto;
 using BankProject.Services.Helpers;
-using Microsoft.VisualBasic.FileIO;
 
 namespace BankProject.Services
 {
@@ -132,22 +131,33 @@ namespace BankProject.Services
 
         public TransactionResponse UpdateTransaction(TransactionUpdateRequest? transactionUpdateRequest)
         {
-            //1. check for null condition of transactionUpdateRequest
-            if (transactionUpdateRequest == null)
-                throw new TransactionException(nameof(transactionUpdateRequest));
+            try
+            {
+                //1. check for null condition of transactionUpdateRequest
+                if (transactionUpdateRequest == null)
+                    throw new TransactionException(nameof(transactionUpdateRequest));
 
-            //2. validate all properties of transactionUpdateRequest
-            ValidationHelper.ModelValidation(transactionUpdateRequest);
+                //2. validate all properties of transactionUpdateRequest
+                ValidationHelper.ModelValidation(transactionUpdateRequest);
 
-            //3. convert transactionUpdateRequest to Transaction type
-            var transaction = transactionUpdateRequest.ToTransaction();
+                //3. convert transactionUpdateRequest to Transaction type
+                var transaction = transactionUpdateRequest.ToTransaction();
 
-            //4. invoke corresponding repository
-            var updatedTransaction = _transactionsRepository.UpdateTransaction(transaction) 
-                ?? throw new TransactionException("No matching transaction found");
+                //4. invoke corresponding repository
+                var updatedTransaction = _transactionsRepository.UpdateTransaction(transaction)
+                    ?? throw new TransactionException("No matching transaction found");
 
-            //5. return the transactionResponse object
-            return updatedTransaction.ToTransactionResponse();
+                //5. return the transactionResponse object
+                return updatedTransaction.ToTransactionResponse();
+            }
+            catch(TransactionException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
     }
 }
