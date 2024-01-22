@@ -6,11 +6,13 @@ namespace BankProject.Presentation
     {
         private readonly CustomersMenuDisplay _customersDisplay;
         private readonly AccountsMenuDisplay _accountsDisplay;
+        private readonly TransactionsPresentation _transactionsPresentation;
 
-        public MainMenuDisplay(CustomersMenuDisplay customersMenuDisplay, AccountsMenuDisplay accountsDisplay)
+        public MainMenuDisplay(CustomersMenuDisplay customersMenuDisplay, AccountsMenuDisplay accountsDisplay, TransactionsPresentation transactionsPresentation)
         {
             _customersDisplay = customersMenuDisplay;
             _accountsDisplay = accountsDisplay;
+            _transactionsPresentation = transactionsPresentation;
         }
 
         public async Task RunAsync()
@@ -68,12 +70,11 @@ namespace BankProject.Presentation
             Console.WriteLine("______________________MAIN MENU__________________________________________");
             Console.WriteLine("1. Customers");
             Console.WriteLine("2. Accounts");
-            Console.WriteLine("3. Funds Transfer");
-            Console.WriteLine("4. Funds Transfer Statement");
-            Console.WriteLine("5. Account Statement");
+            Console.WriteLine("3. Funds Transfer Statement");
+            Console.WriteLine("4. Account Statement");
             Console.WriteLine("0. Exit");
 
-            mainMenuChoice = GetChoice("Enter your choice [0-5]: ", mainMenuChoice);
+            mainMenuChoice = GetMainMenuChoice("Enter your choice [0-4]: ", mainMenuChoice);
             ManipulateMainMenuSelection(mainMenuChoice);
             return mainMenuChoice;
         }
@@ -88,11 +89,11 @@ namespace BankProject.Presentation
                 case 2:
                     _accountsDisplay.AccountsMenuSelection();
                     break;
-                case 3: //TO DO: Display funds transfer menu
+                case 3:
+                    _transactionsPresentation.AddTransaction();
                     break;
-                case 4: //TO DO: Display funds transfer statement menu
-                    break;
-                case 5: //TO DO: Display account statement menu
+                case 4:
+                    _transactionsPresentation.DisplayTransactions();
                     break;
                 case 0:
                     break;
@@ -112,6 +113,17 @@ namespace BankProject.Presentation
             {
                 Console.WriteLine("Invalid Choice");
                 Console.Write("Enter your choice [0-5]: ");
+            }
+            return value;
+        }
+
+        private static int GetMainMenuChoice(string input, int value)
+        {
+            Console.Write("Enter your choice [0-4]: ");
+            while (!int.TryParse(Console.ReadLine(), out value) || (value < 0 || value > 4))
+            {
+                Console.WriteLine("Invalid Choice");
+                Console.Write("Enter your choice [0-4]: ");
             }
             return value;
         }
