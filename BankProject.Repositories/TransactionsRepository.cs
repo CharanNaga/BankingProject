@@ -34,7 +34,24 @@ namespace BankProject.Repositories
 
         public bool DeleteTransaction(Guid transactionID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var matchingTransaction = _transactions.Find(temp => temp.TransactionID == transactionID);
+                if (matchingTransaction == null)
+                {
+                    return false;
+                }
+                _transactions.Remove(matchingTransaction);
+                return true;
+            }
+            catch(TransactionException)
+            {
+                throw;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public List<Transaction> GetFilteredTransactions(Predicate<Transaction> condition)
